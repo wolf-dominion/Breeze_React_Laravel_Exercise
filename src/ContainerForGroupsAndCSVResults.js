@@ -29,8 +29,6 @@ class ContainerForGroupsAndCSVResults extends Component {
     }
 
     displayGroups = () =>{
-        console.log("groups: ", this.state.dBGroups)
-
         let updatedPanes = []
 
         this.state.dBGroups.map(group => {
