@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-use App\Http\Resources\GroupCollection;
+use App\Http\Resources\GroupsCollection;
 use App\Http\Resources\GroupResource;
 use App\Models\Group;
 
@@ -45,7 +45,7 @@ class GroupsController extends Controller
 
         $group = Group::create($request->all());
 
-        return (new GroupResource($person))
+        return (new GroupResource($group))
             ->response()
             ->setStatusCode(201);
     }
