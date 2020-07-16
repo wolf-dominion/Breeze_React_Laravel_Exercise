@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 class DisplayPeopleInGroup extends Component {
 
-
     render(){
         return(
             <div>

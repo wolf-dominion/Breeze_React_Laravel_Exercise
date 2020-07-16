@@ -18,7 +18,11 @@ class ContainerForGroupsAndCSVResults extends Component {
     getDBGroups = () => {
         fetch("http://localhost:8000/api/groups")
         .then(response => response.json())
-        .then(data => this.setState({ dBGroups: data.data }));
+        .then(this.setDBGroupsToState);
+    }
+
+    setDBGroupsToState = (data) => {
+        this.setState({ dBGroups: data.data })
     }
 
     render(){
