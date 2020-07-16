@@ -5,7 +5,7 @@ class FetchHandler extends Component {
     componentDidMount(){
         console.log("props? ", this.props)
         if (this.props.checkcsvTypePeople){
-            this.postFetchPerson()
+            this.createPersonObject()
         }
         if (!this.props.checkcsvTypePeople){
             this.createGroupObject()
@@ -16,9 +16,8 @@ class FetchHandler extends Component {
         return response.json()
     }
     
-    postFetchPerson = () => {
-        let allPeople = this.getAllPeople()
-        
+    postFetchPerson = (personToSave) => {
+        console.log('person ready for fetch call', personToSave);
     }
 
     postFetchGroup = (groupToSave) => {
@@ -50,6 +49,38 @@ class FetchHandler extends Component {
         return peopleArray
     }
 
+    createPersonObject = () => {
+        let allPeople = this.getAllPeople()
+        let updatePeopleIds = []
+        
+        this.props.data.map(newPerson => {
+            // check if id already exists
+            let checkPersonExists
+            checkPersonExists = allPeople.find(person => person.id === newPerson.id)
+
+            if(checkPersonExists){
+                updatePeopleIds.push(checkPersonExists.id)
+            }
+
+            if(!checkPersonExists){
+
+                const personToSave = {
+                      first_name: newPerson.first_name,
+                      last_name: newPerson.last_name,
+                      email_address: newPerson.email_address,
+                      status: newPerson.status,
+                      group_id: newPerson.group_id  
+                  }
+                  this.postFetchPerson(personToSave)
+            }
+        })
+            
+        // if(updatePeopleIds.length > 0){
+        //     // need to update these ids: {updatePeopleIds.map(id => { id})}
+        // }
+        // alert("People save to website!")
+    }
+
     createGroupObject = () => {
 
         let idsToUpdate = []
@@ -76,7 +107,7 @@ class FetchHandler extends Component {
         if(idsToUpdate.length > 0){
             // need to update these ids: {problemIds.map(id => { id})}
         }
-        alert("Groups save to website!")
+        // alert("Groups save to website!")
     }
 
     render(){
