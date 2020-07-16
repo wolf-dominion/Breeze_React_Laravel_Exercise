@@ -8,13 +8,9 @@ class CSVImport extends Component {
         csvFile: false,
         csvFileGroups: false,
         csvFilePeople: false,
-        dBGroups: "test"
+        dBGroups: "",
+        dBPeople: ""
     }
-
-    // componentDidUpdate(){
-    //     console.log('props? ', this.props)
-    //     this.setState({dBGroups: "props detected"})
-    // }
 
     componentDidMount(){
         this.fetchPeopleAndGroups()
@@ -23,17 +19,52 @@ class CSVImport extends Component {
     fetchPeopleAndGroups = () => {
         fetch("http://localhost:8000/api/people")
         .then(response => response.json())
-        .then(data => this.setState({ people: data.data }));
+        .then(data => this.setState({ dBPeople: data.data }));
     
         fetch("http://localhost:8000/api/groups")
         .then(response => response.json())
-        .then(data => this.setState({ groups: data.data }));
+        .then(data => this.setState({ dBGroups: data.data }));
     }
+
+    handleForce = (data) => {
+        // check if file is empty or not people/group
+        if(data.length > 0){
+            if(data[0].first_name){
+                this.setState({csvFileExist: true, csvFilePeople: data, csvFileGroups: false})
+            }
+            else if(data[0].group_name){
+                this.setState({csvFileExist: true, csvFileGroups: data, csvFilePeople: false})
+            }
+        }else {
+            window.alert("We did not detect a CSV file for people or groups. Please upload proper file.")
+        }
+
+    }
+
+    papaparseOptions = () => {
+        return {
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            transformHeader: header => header.toLowerCase().replace(/\W/g, "_")
+            }
+        };
+
+        reader = () => {
+            return <div className="container">
+                        <CSVReader
+                            cssClass="react-csv-input"
+                            onFileLoaded={this.handleForce}
+                            parserOptions={this.papaparseOptions()}
+                        />
+                    </div>
+        }
     
     render(){
         return(
             <div>
                 <p>Below, choose a CSV file for either a list of people or groups. </p>
+                {this.reader()}
             </div>
         )
     }
