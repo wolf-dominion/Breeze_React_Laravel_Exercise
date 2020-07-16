@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-use App\Http\Resources\PeopleCollection;
-use App\Http\Resources\PersonResource;
-use App\Models\Person;
+use App\Http\Resources\GroupCollection;
+use App\Http\Resources\GroupResource;
+use App\Models\Group;
 
 class GroupsController extends Controller
 {
