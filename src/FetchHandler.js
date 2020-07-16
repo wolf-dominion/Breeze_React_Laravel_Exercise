@@ -17,7 +17,25 @@ class FetchHandler extends Component {
     }
     
     postFetchPerson = (personToSave) => {
-        console.log('person ready for fetch call', personToSave);
+        const peopleURL = 'http://127.0.0.1:8000/api/people/'
+        fetch(peopleURL, {
+            method: 'POST', 
+            headers: {
+                'content-type': 'application/json',
+                Accept: 'application/json'
+            },
+            body: JSON.stringify({
+                first_name: personToSave["first_name"],
+                last_name: personToSave["last_name"],
+                email_address: personToSave["email_address"],
+                status: personToSave["status"],
+                group_id: personToSave["group_id"]
+            })
+        }).then(this.parseJSON)
+        .then(result =>{
+            console.log('result:', result);
+            return result
+        })
     }
 
     postFetchGroup = (groupToSave) => {
@@ -34,6 +52,14 @@ class FetchHandler extends Component {
                 console.log('result:', result);
                 return result
             })
+    }
+
+    putFetchPerson = (personToUpdate) => {
+
+    }
+
+    putFetchGroup = (groupToUpdate) => {
+        
     }
 
     getAllPeople = () => {
@@ -75,9 +101,9 @@ class FetchHandler extends Component {
             }
         })
             
-        // if(updatePeopleIds.length > 0){
-        //     // need to update these ids: {updatePeopleIds.map(id => { id})}
-        // }
+        if(updatePeopleIds.length > 0){
+            // need to update these ids: {updatePeopleIds.map(id => { id})}
+        }
         // alert("People save to website!")
     }
 
