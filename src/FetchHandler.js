@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 class FetchHandler extends Component {
 
     componentDidMount(){
-        console.log("props? ", this.props)
         if (this.props.checkcsvTypePeople){
             this.createPersonObject()
         }
@@ -55,7 +54,8 @@ class FetchHandler extends Component {
     }
 
     putFetchPerson = (personToUpdate) => {
-
+        console.log('ready to update', personToUpdate);
+        
     }
 
     putFetchGroup = (groupToUpdate) => {
@@ -85,7 +85,7 @@ class FetchHandler extends Component {
             checkPersonExists = allPeople.find(person => person.id === newPerson.id)
 
             if(checkPersonExists){
-                updatePeopleIds.push(checkPersonExists.id)
+                updatePeopleIds.push(checkPersonExists)
             }
 
             if(!checkPersonExists){
@@ -102,7 +102,9 @@ class FetchHandler extends Component {
         })
             
         if(updatePeopleIds.length > 0){
-            // need to update these ids: {updatePeopleIds.map(id => { id})}
+            {updatePeopleIds.map(person => { 
+                this.putFetchPerson(person)
+            })}
         }
         // alert("People save to website!")
     }
