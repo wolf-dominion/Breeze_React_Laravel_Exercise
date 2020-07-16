@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import CSVReader from "react-csv-reader";
-import { Table } from 'semantic-ui-react'
+import CSVTable from './CSVTable'
 
 class CSVImport extends Component {
 
@@ -63,8 +63,22 @@ class CSVImport extends Component {
     render(){
         return(
             <div>
-                <p>Below, choose a CSV file for either a list of people or groups. </p>
-                {this.reader()}
+                <div>
+                    <p>Below, choose a CSV file for either a list of people or groups. </p>
+                    {this.reader()}
+                </div>
+                <div>
+                    {this.state.csvFilePeople ? 
+                        <div> 
+                            {<CSVTable data={this.state.csvFilePeople} checkcsvTypePeople={true}/>}
+                        </div> : null}
+                        
+                    {this.state.csvFileGroups ?
+                        <div> 
+                            {<CSVTable data={this.state.csvFileGroups} checkcsvTypePeople={false}/>}
+                        </div> : null
+                    }
+                </div>
             </div>
         )
     }
