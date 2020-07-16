@@ -18,7 +18,7 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        return new GroupCollection(Group::all());
+        return new GroupsCollection(Group::all());
     }
 
     /**
@@ -58,7 +58,7 @@ class GroupsController extends Controller
      */
     public function show($id)
     {
-        return new PersonResource(Person::findOrFail($id));
+        return new GroupResource(Group::findOrFail($id));
     }
 
     /**
@@ -81,8 +81,8 @@ class GroupsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $person = Person::findOrFail($id);
-        $person->update($request->all());
+        $group = Group::findOrFail($id);
+        $group->update($request->all());
 
         return response()->json(null, 204);
     }
@@ -95,9 +95,14 @@ class GroupsController extends Controller
      */
     public function destroy($id)
     {
-        $person = Person::findOrFail($id);
-        $person->delete();
-
-        return response()->json(null, 204);
+        $group = Group::findOrFail($id);
+        if($group){
+            $group->people()->get()->each->delete();
+            $group->delete();
+            return response()->json(null, 204);
+        }
+        else{
+            return "group not found.";
+        }
     }
 }
