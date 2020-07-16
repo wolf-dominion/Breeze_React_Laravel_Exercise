@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Tab } from 'semantic-ui-react'
 import DisplayPeopleInGroup from './DisplayPeopleInGroup'
-//import DisplayGroups from './DisplayGroups'
 
 class ContainerForGroupsAndCSVResults extends Component {
 
@@ -49,13 +48,8 @@ class ContainerForGroupsAndCSVResults extends Component {
     )
 
     render(){
-
-        // const {dBGroups} = this.state
-
         return(
             <div>
-                <p>Hi, I'm a container</p>
-                {/* <DisplayGroups dBGroups={dBGroups}/> */}
                 {this.groupTabs()}
             </div>
         )
