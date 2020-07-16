@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
+import DisplayGroups from './DisplayGroups'
+
 class ContainerForGroupsAndCSVResults extends Component {
 
     state = {
-        DBGroups: [],
-        DBPeople: []
+        dBGroups: [],
+        dBPeople: []
     }
 
     // get groups and people from DB and set to state
@@ -16,13 +18,17 @@ class ContainerForGroupsAndCSVResults extends Component {
     getDBGroups = () => {
         fetch("http://localhost:8000/api/groups")
         .then(response => response.json())
-        .then(data => this.setState({ DBGroups: data.data }));
+        .then(data => this.setState({ dBGroups: data.data }));
     }
 
     render(){
+
+        const {dBGroups} = this.state
+
         return(
             <div>
                 <p>Hi, I'm a container</p>
+                <DisplayGroups dBGroups={dBGroups}/>
             </div>
         )
     }
