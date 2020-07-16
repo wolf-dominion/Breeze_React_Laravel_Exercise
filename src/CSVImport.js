@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import CSVReader from "react-csv-reader";
 import CSVTable from './CSVTable'
 
+import FetchHandler from './FetchHandler'
+
 class CSVImport extends Component {
 
     state = {
@@ -50,14 +52,14 @@ class CSVImport extends Component {
             }
         };
 
-        reader = () => {
-            return <div className="container">
-                        <CSVReader
-                            cssClass="react-csv-input"
-                            onFileLoaded={this.handleForce}
-                            parserOptions={this.papaparseOptions()}
-                        />
-                    </div>
+    reader = () => {
+        return <div className="container">
+                    <CSVReader
+                        cssClass="react-csv-input"
+                        onFileLoaded={this.handleForce}
+                        parserOptions={this.papaparseOptions()}
+                    />
+                </div>
         }
     
     render(){
@@ -69,12 +71,14 @@ class CSVImport extends Component {
                 </div>
                 <div>
                     {this.state.csvFilePeople ? 
-                        <div> 
+                        <div>
+                            {<FetchHandler data={this.state.csvFilePeople} checkcsvTypePeople={true} DBGroups={this.state.dBPeople}/>} 
                             {<CSVTable data={this.state.csvFilePeople} checkcsvTypePeople={true}/>}
                         </div> : null}
                         
                     {this.state.csvFileGroups ?
                         <div> 
+                            {<FetchHandler data={this.state.csvFileGroups} checkcsvTypePeople={false} DBGroups={this.state.dBGroups}/>}
                             {<CSVTable data={this.state.csvFileGroups} checkcsvTypePeople={false}/>}
                         </div> : null
                     }
