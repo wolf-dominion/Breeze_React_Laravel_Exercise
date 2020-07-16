@@ -22,8 +22,19 @@ class FetchHandler extends Component {
     }
 
     postFetchGroup = (groupToSave) => {
-        console.log('ready to do fetch call!', groupToSave);
-        
+            const groupsURL = 'http://127.0.0.1:8000/api/groups/'
+            fetch(groupsURL, {
+                method: 'POST', 
+                headers: {
+                    'content-type': 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({group_name: groupToSave["group_name"]})
+            }).then(this.parseJSON)
+            .then(result =>{
+                console.log('result:', result);
+                return result
+            })
     }
 
     getAllPeople = () => {
@@ -65,6 +76,7 @@ class FetchHandler extends Component {
         if(idsToUpdate.length > 0){
             // need to update these ids: {problemIds.map(id => { id})}
         }
+        alert("Groups save to website!")
     }
 
     render(){
