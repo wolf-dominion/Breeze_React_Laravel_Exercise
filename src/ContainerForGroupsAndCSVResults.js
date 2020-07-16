@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Tab } from 'semantic-ui-react'
 import DisplayPeopleInGroup from './DisplayPeopleInGroup'
+import CSVImport from './CSVImport'
 
 class ContainerForGroupsAndCSVResults extends Component {
 
@@ -51,6 +52,7 @@ class ContainerForGroupsAndCSVResults extends Component {
         return(
             <div>
                 {this.groupTabs()}
+                <CSVImport updateDBGroupState={(this.setDBGroupsToState)} dBGroups={this.state.dBGroups}/>
             </div>
         )
     }
