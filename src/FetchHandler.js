@@ -55,7 +55,25 @@ class FetchHandler extends Component {
 
     putFetchPerson = (personToUpdate) => {
         console.log('ready to update', personToUpdate);
-        
+        const personURL = `http://127.0.0.1:8000/api/people/${personToUpdate.id}`
+        fetch(personURL, {
+            method: 'PUT', 
+            headers: {
+                'content-type': 'multipart/form-data',
+                Accept: 'application/json'
+            },body: JSON.stringify({
+                id: personToUpdate.id,
+                first_name: personToUpdate["first_name"],
+                last_name: personToUpdate["last_name"],
+                email_address: personToUpdate["email_address"],
+                status: personToUpdate["status"],
+                group_id: personToUpdate["group_id"]
+            })
+        })
+        .then(result =>{
+            console.log('result:', result);
+            return result
+        })
     }
 
     putFetchGroup = (groupToUpdate) => {
@@ -82,15 +100,18 @@ class FetchHandler extends Component {
         this.props.data.map(newPerson => {
             // check if id already exists
             let checkPersonExists
-            checkPersonExists = allPeople.find(person => person.id === newPerson.id)
+                if (allPeople){
+                    checkPersonExists = allPeople.find(person => person.id === newPerson.id)
+                }
 
             if(checkPersonExists){
                 updatePeopleIds.push(checkPersonExists)
             }
 
-            if(!checkPersonExists){
+            if(!checkPersonExists && !allPeople){
 
                 const personToSave = {
+                      id: newPerson.id,  
                       first_name: newPerson.first_name,
                       last_name: newPerson.last_name,
                       email_address: newPerson.email_address,
@@ -119,7 +140,7 @@ class FetchHandler extends Component {
             checkGroupExists = this.props.DBGroups.find(group => group.id === newGroup.id)
 
             if(checkGroupExists){
-                idsToUpdate.push(checkGroupExists.id)
+                idsToUpdate.push(checkGroupExists)
             }
 
             if(!checkGroupExists){
