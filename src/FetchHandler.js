@@ -54,23 +54,21 @@ class FetchHandler extends Component {
     }
 
     putFetchPerson = (personToUpdate) => {
-        console.log('ready to update', personToUpdate);
         const personURL = `http://127.0.0.1:8000/api/people/${personToUpdate.id}`
         fetch(personURL, {
             method: 'PUT', 
             headers: {
-                'content-type': 'multipart/form-data',
+                'content-type': 'application/json',
                 Accept: 'application/json'
-            },body: JSON.stringify({
-                id: personToUpdate.id,
+            },
+            body: JSON.stringify({
                 first_name: personToUpdate["first_name"],
                 last_name: personToUpdate["last_name"],
                 email_address: personToUpdate["email_address"],
                 status: personToUpdate["status"],
                 group_id: personToUpdate["group_id"]
             })
-        })
-        .then(result =>{
+        }).then(result =>{
             console.log('result:', result);
             return result
         })
